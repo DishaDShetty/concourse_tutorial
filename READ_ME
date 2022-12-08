@@ -1,0 +1,30 @@
+to download the images: >>docker-compose up -d
+to login : >>fly -t lite login -c http://localhost:8080
+#-t = -target
+username/password : test/test
+# -t for the environment (eg: lite) and is used in all the commands that follows 
+
+
+###############           "HELLO-JOB"       ###################################
+to create a pipeline: >>fly -t lite set-pipeline -p my-pipeline -c .\pipeline.yml 
+#creating of pipeline is with set-pipeline and config it to use the pipeline file
+to trigger the build: >>fly -t lite trigger-job --job my-pipeline/job
+
+
+
+###############           "VARIABLES-JOB"       ###################################
+to test how interpolation: >>fly validate-pipeline -t lite -c .\pipeline.yml -l .\variables.yml --output
+#The fly validate-pipeline command may be used to test how interpolation is applied, by passing the --output flag.
+to create a pipeline: >>fly -t lite set-pipeline -p variables_job -c .\pipeline.yml -l .\variables.yml
+build 2nd job: >>fly -t lite trigger-job  --job variables_job/second-name-job
+build 1st job: >>fly -t lite trigger-job  --job variables_job/first-name-job
+
+
+
+###############           "INPUT-OUTPUT-PIPELINE"       ###################################
+to create a new pipeline: >>fly -t lite set-pipeline -p in-out-pipeline -c .\pipeline.yml
+
+
+
+###############           "TIME-TRIGGERING-PIPELINE"       ###################################
+to create the pipelien and run: >>fly -t lite set-pipeline -p time-job -c .\pipeline.yml

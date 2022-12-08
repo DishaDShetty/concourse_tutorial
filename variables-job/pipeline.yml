@@ -1,0 +1,25 @@
+jobs:
+- name: ((job_name_1))-job
+  public: true
+  plan:
+  - task: simple-task
+    config:
+      platform: linux
+      image_resource:
+        type: registry-image
+        source: { repository: busybox }
+      run:
+        path: echo
+        args: ["Hello, ((first_person))!"]
+- name: ((job_name_2))-job
+  public: true
+  plan:
+  - task: simple-task
+    config:
+      platform: linux
+      image_resource:
+        type: registry-image
+        source: { repository: busybox }
+      run:
+        path: echo
+        args: ["Hello, ((second_person))!"]
